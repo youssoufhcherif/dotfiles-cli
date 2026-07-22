@@ -19,7 +19,10 @@ opt.incsearch = true
 -- UI
 opt.termguicolors = true
 opt.signcolumn = "yes"
-opt.scrolloff = 8
+-- scrolloff=999 keeps the cursor vertically centered ("typewriter scrolling"),
+-- so the last line is never pinned to the bottom -- it rises to the middle with
+-- empty space below, like WebStorm's virtual space at the file bottom.
+opt.scrolloff = 999
 opt.wrap = false
 opt.cursorline = true
 opt.splitright = true

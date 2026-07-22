@@ -60,8 +60,10 @@ set expandtab
 " Do not save backup files.
 set nobackup
 
-" Do not let cursor scroll below or above N number of lines when scrolling.
-set scrolloff=10
+" scrolloff=999 keeps the cursor vertically centered ("typewriter scrolling"),
+" so the last line is never pinned to the bottom -- it rises to the middle with
+" empty space below, like WebStorm's virtual space at the file bottom.
+set scrolloff=999
 
 " Do not wrap lines. Allow long lines to extend as far as the line goes.
 set nowrap
