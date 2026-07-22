@@ -108,3 +108,14 @@ sparse here — oh-my-zsh's `git` plugin already provides a large set
 | `d` / `dc` / `dps` | `docker` / `docker compose` / `docker ps` |
 | `dcu` / `dcd` / `dcl` | compose up -d / down / logs -f |
 | `ta <name>` / `tls` / `tn <name>` / `tk <name>` | tmux attach / list / new / kill session |
+| `dotf` | `cd ~/dotfiles-cli` |
+| `please` | re-run the last command with `sudo` |
+| `gundo` | undo last commit, keep changes staged (function) |
+| `gbclean` | delete local branches already merged into main/master (function) |
+| `dsh <container>` | `docker exec -it <container> sh` (function) |
+| `kexec <pod>` | `kubectl exec -it <pod> -- sh` (function) |
+| `up [n]` | go up `n` directories, default 1 (function) |
+| `extract <file>` | extract almost any archive (`.tar.gz`/`.zip`/`.rar`/...) (function) |
+| `backup <file>` | copy to `file.bak-<timestamp>` (function) |
+| `hist <term>` | grep shell history (function) |
+| `myip` | show public + local IP (function) |

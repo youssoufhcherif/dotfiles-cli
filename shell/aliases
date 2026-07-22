@@ -55,6 +55,12 @@ alias kl='kubectl logs -f'
 alias pni='pnpm install'
 alias pnb='pnpm build'
 
+# Jump to the dotfiles repo
+alias dotf='cd ~/dotfiles-cli'
+
+# Re-run the last command with sudo
+alias please='sudo $(fc -ln -1)'
+
 # Create and push a new branch
 gnb() {
   git checkout -b "$1"
@@ -73,4 +79,83 @@ qc() {
 # mkdir -p and cd into it in one step
 mkcd() {
   mkdir -p "$1" && cd "$1"
+}
+# Undo last commit, keep the changes staged
+gundo() {
+  git reset --soft HEAD~1
+}
+# Delete local branches already merged into main/master
+gbclean() {
+  local default_branch merged
+  default_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+  if [ -z "$default_branch" ]; then
+    if git show-ref --verify --quiet refs/heads/main; then
+      default_branch="main"
+    elif git show-ref --verify --quiet refs/heads/master; then
+      default_branch="master"
+    else
+      default_branch=$(git branch --show-current)
+    fi
+  fi
+  merged=$(git branch --merged "$default_branch" | grep -vE "^\*|^[[:space:]]*${default_branch}\$")
+  if [ -n "$merged" ]; then
+    echo "$merged" | xargs git branch -d
+  else
+    echo "No merged branches to clean up"
+  fi
+}
+# Shell into a running docker container
+dsh() {
+  docker exec -it "$1" sh
+}
+# Shell into a kubernetes pod
+kexec() {
+  kubectl exec -it "$1" -- sh
+}
+# Go up N directories (default 1)
+up() {
+  local n="${1:-1}" d=""
+  for ((i = 0; i < n; i++)); do
+    d="../$d"
+  done
+  cd "$d" || return
+}
+# Extract almost any archive with one command
+extract() {
+  if [ ! -f "$1" ]; then
+    echo "extract: '$1' is not a valid file"
+    return 1
+  fi
+  case "$1" in
+    *.tar.bz2) tar xjf "$1" ;;
+    *.tar.gz)  tar xzf "$1" ;;
+    *.tar.xz)  tar xJf "$1" ;;
+    *.tbz2)    tar xjf "$1" ;;
+    *.tgz)     tar xzf "$1" ;;
+    *.tar)     tar xf "$1" ;;
+    *.bz2)     bunzip2 "$1" ;;
+    *.gz)      gunzip "$1" ;;
+    *.zip)     unzip "$1" ;;
+    *.rar)     unrar x "$1" ;;
+    *.7z)      7z x "$1" ;;
+    *.Z)       uncompress "$1" ;;
+    *)         echo "extract: don't know how to extract '$1'" ;;
+  esac
+}
+# Copy a file to file.bak-<timestamp> before editing it
+backup() {
+  cp "$1" "$1.bak-$(date +%Y%m%d%H%M%S)"
+}
+# Grep your shell history
+hist() {
+  history 2>/dev/null | grep -i "$1"
+}
+# Show public and local IP
+myip() {
+  echo "Public: $(curl -s https://ifconfig.me)"
+  if command -v ip >/dev/null 2>&1; then
+    echo "Local:  $(hostname -I 2>/dev/null | awk '{print $1}')"
+  elif command -v ipconfig >/dev/null 2>&1; then
+    echo "Local:  $(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null)"
+  fi
 }
