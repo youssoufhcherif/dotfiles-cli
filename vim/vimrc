@@ -1,0 +1,288 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+"               
+"               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
+"               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
+"               ██║   ██║██║██╔████╔██║██████╔╝██║     
+"               ╚██╗ ██╔╝██║██║╚██╔╝██║██╔══██╗██║     
+"                ╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗
+"                 ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝
+"               
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+" Set the colorscheme to catpuccino
+let g:airline_theme = 'catppuccin_mocha'
+let g:airline_statusline_ontop=1
+set noshowmode
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+" Turn syntax highlighting on.
+syntax on
+" Add numbers to each line on the left-hand side.
+set number
+" Highlight cursor line underneath the cursor horizontally.
+" set cursorline
+
+" Highlight cursor line underneath the cursor vertically.
+" set cursorcolumn
+
+" Disable compatibility with vi which can cause unexpected issues.
+set nocompatible
+
+" Enable type file detection. Vim will be able to try to detect the type of file in use.
+filetype on
+
+" Enable plugins and load plugin for the detected file type.
+filetype plugin on
+
+" Load an indent file for the detected file type.
+filetype indent on
+
+" Set shift width to 4 spaces.
+set shiftwidth=2
+
+" Set tab width to 4 columns.
+set tabstop=2
+
+" Use space characters instead of tabs.
+set expandtab
+
+" Do not save backup files.
+set nobackup
+
+" Do not let cursor scroll below or above N number of lines when scrolling.
+set scrolloff=10
+
+" Do not wrap lines. Allow long lines to extend as far as the line goes.
+set nowrap
+
+" While searching though a file incrementally highlight matching characters as you type.
+set incsearch
+
+" Ignore capital letters during search.
+set ignorecase
+
+" Override the ignorecase option if searching for capital letters.
+" This will allow you to search specifically for capital letters.
+set smartcase
+
+" Show partial command you type in the last line of the screen.
+set showcmd
+
+" Show the mode you are on the last line.
+set showmode
+
+" Show matching words during a search.
+set showmatch
+
+" Use highlighting when doing a search.
+set hlsearch
+
+" Set the commands to save in history default number is 20.
+set history=1000
+
+" Enable auto completion menu after pressing TAB.
+set wildmenu
+
+" Make wildmenu behave like similar to Bash completion.
+set wildmode=list:longest
+
+" There are certain files that we would never want to edit with Vim.
+" Wildmenu will ignore files with these extensions.
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
+
+set encoding=UTF-8
+set shell=sh
+
+" MAPPINGS --------------------------------------------------------------- {{{
+" Disable arrow key for navigation
+map <up> <nop>
+map <down> <nop>
+map <right> <nop>
+map <left> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <right> <nop>
+imap <left> <nop>
+" Set the <space> as the leader key.
+let mapleader = " "
+
+" Type jj to exist insert mode quickly.
+inoremap jj <Esc>
+
+" Press <leader>w to save the current file.
+nnoremap <leader>w :w<CR>
+
+" Press `<leader>w to save the current file.
+nnoremap <leader>w :w<CR>
+
+" Press `<leader>q to close the current file.
+nnoremap <leader>q :q<CR>
+
+" Press `<leader>q to close the current file without saving.
+nnoremap <leader>fq :q!<CR>
+
+" Press `<leader>e to open the file explorer.
+nnoremap <leader>e :Ex<CR>
+
+" Press `<leader>f to search the current file with grep.
+nnoremap <leader>f :grep
+
+" Press `<leader>w to save the current file.
+nnoremap <leader>w :w<CR>
+
+" Press the space bar to type the : character in command mode.
+nnoremap \ :
+
+" Pressing the letter o should open a new line below the current.
+" Exit insert mode after creating a new line above or below the current line.
+nnoremap o o<esc>
+nnoremap O O<esc>
+
+" Center the cursor vertically when moving to the next word during a search.
+nnoremap n nzz
+nnoremap N Nzz
+
+" Yank from the cursor to the end of the line.
+nnoremap Y y$
+
+" Type `<leader>r to a js file inside Vim.
+nnoremap <leader>r :w <CR>:!clear <CR>:!node % <CR>
+
+" Type `<leader>v to split the window vertically and `h to split horizontally.
+nnoremap <leader>v :vsplit<CR>
+nnoremap <leader>h :split<CR>
+
+" Type `<leader>v to split the window vertically and `h to split horizontally.
+nnoremap <leader>c :close<CR>
+
+" Navigate to the split view easier by pressing CTRL+j, CTRL_k, CTRL+h, CTRL+l.
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+" Resize split windows using arrows keys by pressing CTRL+UP, CTRL+DOWN, CTRL+LEFT, CTRL+RIGHT.
+nnoremap <c-up> <c-w>+
+nnoremap <c-down> <c-w>-
+nnoremap <c-left> <c-w><
+nnoremap <c-right> <c-w>>
+
+" NERDTree specific mappings.
+" Type `<leader>1 to toggle NERDTree open and close.
+nnoremap <leader>1 :NERDTreeToggle<cr>
+
+" Type `<leader>2 to reveal the current file in the tree (like WebStorm's
+" "Select In > Project View").
+nnoremap <leader>2 :NERDTreeFind<cr>
+
+" Have NERDTree ignore certain files and directories.
+let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', '\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
+
+" CtrlP already gives you Ctrl-P fuzzy file search (<c-p>, mapped above).
+" These extra CtrlP modes cover the rest of WebStorm's Ctrl-P/switcher/recent-files:
+" Recent files (like WebStorm's Recent Files, Ctrl+E).
+nnoremap <leader>fr :CtrlPMRUFiles<cr>
+" Open-buffer switcher (like WebStorm's Ctrl+Tab switcher).
+nnoremap <leader>b :CtrlPBuffer<cr>
+
+" }}}
+
+" VIMSCRIPT -------------------------------------------------------------- {{{
+
+" Enable the marker method of folding.
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" If the current file type is HTML, set indentation to 2 spaces.
+autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd Filetype ts setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd Filetype ts setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd Filetype js setlocal tabstop=2 shiftwidth=2 expandtab
+
+" If Vim version is equal to or greater than 7.3 enable undofile.
+" This allows you to undo changes to a file even after saving it.
+if version >= 703
+    set undodir=~/.vim/backup
+    set undofile
+    set undoreload=10000
+endif
+
+" }}}
+
+" PLUGINS ---------------------------------------------------------------- {{{
+
+    call plug#begin()
+    Plug 'vim-airline/vim-airline'
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+    Plug 'preservim/nerdtree' |
+            \ Plug 'Xuyuanp/nerdtree-git-plugin' |
+            \ Plug 'ryanoasis/vim-devicons'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'dense-analysis/ale'
+    call plug#end()
+"call plug#begin('~/.vim/plugged')
+
+ " Plug 'dense-analysis/ale'
+
+  "Plug 'preservim/nerdtree'
+
+
+"call plug#end()
+
+" }}}
+
+
+" VIMSCRIPT -------------------------------------------------------------- {{{
+
+" This will enable code folding.
+" Use the marker method of folding.
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" More Vimscripts code goes here.
+
+" }}}
+
+
+" STATUS LINE ------------------------------------------------------------ {{{
+
+" Status bar code goes here.
+
+
+" Apply colorscheme AFTER plugins are loaded
+set termguicolors
+colorscheme catppuccin_mocha
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+let g:airline_theme = 'catppuccin_mocha'
+
+let g:NERDTreeWinPos = "right"
+
+" ALE: format on save with Biome (matches WebStorm's "format on save").
+" Only lists fixers for filetypes Biome actually handles; falls back to
+" whatever formatter/linter is configured elsewhere for other filetypes.
+let g:ale_fixers = {
+\   'javascript': ['biome'],
+\   'javascriptreact': ['biome'],
+\   'typescript': ['biome'],
+\   'typescriptreact': ['biome'],
+\   'json': ['biome'],
+\   'jsonc': ['biome'],
+\}
+let g:ale_fix_on_save = 1
