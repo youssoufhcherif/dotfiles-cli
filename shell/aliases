@@ -1,0 +1,76 @@
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+alias p=pnpm
+alias kdev="kubectl config use-context dev"
+alias kacc="kubectl config use-context acc"
+alias kprod="kubectl config use-context prod"
+
+alias vi="nvim"
+
+# Git
+alias gs='git status'
+alias gco='git checkout'
+alias gc='git commit -m'
+alias gp='git pull'
+alias gpo='git push origin'
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+# Dev & test
+alias dev='pnpm run dev'
+alias test='pnpm test'
+# Utilities
+alias cl='clear'
+alias ll='ls -la'
+
+# Config
+
+alias zconf='vi ~/.zshrc'
+alias zsource='source ~/.zshrc'
+alias reload='exec "$SHELL"'
+
+# tmux
+alias ta='tmux attach -t'
+alias tls='tmux ls'
+alias tn='tmux new -s'
+alias tk='tmux kill-session -t'
+
+# docker
+alias d='docker'
+alias dc='docker compose'
+alias dps='docker ps'
+alias dcu='docker compose up -d'
+alias dcd='docker compose down'
+alias dcl='docker compose logs -f'
+
+# kubectl (beyond the context switchers above)
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias kgs='kubectl get svc'
+alias kaf='kubectl apply -f'
+alias kl='kubectl logs -f'
+
+# pnpm (beyond p/dev/test above)
+alias pni='pnpm install'
+alias pnb='pnpm build'
+
+# Create and push a new branch
+gnb() {
+  git checkout -b "$1"
+  git push -u origin "$1"
+}
+# Kill process on a port
+killport() {
+  lsof -ti:$1 | xargs kill -9
+}
+# Quick commit & push
+qc() {
+  git add .
+  git commit -m "$1"
+  git push
+}
+# mkdir -p and cd into it in one step
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}

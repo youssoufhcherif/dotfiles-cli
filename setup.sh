@@ -91,6 +91,15 @@ link_configs() {
   link "$REPO_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
   link "$REPO_DIR/vim/vimrc" "$HOME/.vimrc"
   link "$REPO_DIR/nvim" "$HOME/.config/nvim"
+  link "$REPO_DIR/shell/aliases" "$HOME/.aliases"
+
+  for rc in "$HOME/.zshrc" "$HOME/.bashrc"; do
+    [ -f "$rc" ] || continue
+    grep -q 'source ~/.aliases\|\. ~/.aliases' "$rc" || {
+      echo "==> Adding 'source ~/.aliases' to $rc"
+      printf '\nsource ~/.aliases\n' >> "$rc"
+    }
+  done
 }
 
 install_plugin_managers() {

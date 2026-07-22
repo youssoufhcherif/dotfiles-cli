@@ -1,7 +1,8 @@
 # HOWTO
 
-Detailed install steps, full keybinding reference, and platform gotchas.
-For the quick version, see [README.md](README.md).
+Detailed install steps and platform gotchas. For the quick overview, see
+[README.md](README.md); for the full keybinding/alias reference, see
+[CHEATSHEET.md](CHEATSHEET.md).
 
 ## Install
 
@@ -17,10 +18,11 @@ up newly required packages. It:
 1. Installs tmux, vim, a current Neovim (0.10+), ripgrep, fd, and biome for
    your platform (Homebrew on macOS, apt + a manual Neovim release on
    Ubuntu/WSL).
-2. Symlinks `~/.tmux.conf`, `~/.vimrc`, and `~/.config/nvim` to the files in
-   this repo. Anything already at those paths that *isn't* one of these
-   symlinks gets moved to `~/.dotfiles-backup-<timestamp>/` first — nothing
-   is silently overwritten.
+2. Symlinks `~/.tmux.conf`, `~/.vimrc`, `~/.config/nvim`, and `~/.aliases` to
+   the files in this repo, and makes sure `~/.zshrc`/`~/.bashrc` source
+   `~/.aliases` (added once if missing). Anything already at those paths
+   that *isn't* one of these symlinks gets moved to
+   `~/.dotfiles-backup-<timestamp>/` first — nothing is silently overwritten.
 3. Installs TPM (tmux), vim-plug (vim), and syncs lazy.nvim (nvim) plugins.
 
 ### Platform notes
@@ -75,85 +77,6 @@ tmux
 TPM plugins install automatically via `setup.sh`. Inside tmux, `prefix + I`
 re-syncs plugins after editing `tmux/tmux.conf`, `prefix + U` updates them.
 
-## Keybinding reference
-
-Leader/prefix: **`Space`** in vim and nvim, **`Ctrl-Space`** in tmux.
-
-### tmux (`tmux/tmux.conf`)
-
-| Key | Action |
-|---|---|
-| `Ctrl-Space` | prefix |
-| `prefix + \|` / `prefix + -` | split vertical / horizontal (opens in current path) |
-| `prefix + h/j/k/l` | move between panes (vim-style) |
-| `prefix + c` | new window (opens in current path) |
-| `prefix + r` | reload `tmux.conf` |
-| `prefix + F` | tmux-fzf menu (sessions/windows/panes) |
-| `prefix + I` / `U` | install / update TPM plugins |
-
-Plugins: tmux-sensible, tmux-resurrect + tmux-continuum (auto-save every 15
-min, auto-restore on start), tmux-yank (system clipboard, win32yank-aware on
-WSL), vim-tmux-navigator (`Ctrl-h/j/k/l` moves between vim splits *and* tmux
-panes seamlessly), tmux-fzf, catppuccin/tmux (Mocha).
-
-### vim / MacVim (`vim/vimrc`)
-
-| Key | Action |
-|---|---|
-| `Ctrl-P` | fuzzy file finder (CtrlP) |
-| `<leader>fr` | recent files (CtrlP MRU) |
-| `<leader>b` | open-buffer switcher (CtrlP) |
-| `<leader>f` | grep (prompts for pattern) |
-| `<leader>1` | toggle file tree (NERDTree) |
-| `<leader>2` | reveal current file in tree (NERDTreeFind) |
-| `<leader>w` / `q` | save / quit |
-| `<leader>v` / `h` | vertical / horizontal split |
-| `Ctrl-h/j/k/l` | move between splits |
-| save a file | Biome formats it automatically (ALE fixer) |
-
-Plugins (vim-plug): vim-airline (+themes), CtrlP, catppuccin/vim, NERDTree
-(+ nerdtree-git-plugin, vim-devicons), ALE (Biome fixer, `g:ale_fix_on_save`).
-
-### Neovim (`nvim/`)
-
-| Key | Action |
-|---|---|
-| `<leader>ff` | fuzzy file finder (Telescope) |
-| `<leader>fg` | live grep across project |
-| `<leader>b` | open buffers (Telescope) |
-| `<leader>fr` | recent files (Telescope oldfiles) |
-| `<leader>fs` | document symbols |
-| `<leader>fd` | diagnostics list |
-| `<leader>1` | toggle file tree (nvim-tree) |
-| `<leader>2` | reveal current file in tree |
-| `<leader>v` / `h` | vertical / horizontal split |
-| `gd` / `gr` | go to definition / references |
-| `K` | hover docs |
-| `<leader>rn` | rename symbol |
-| `<leader>ca` | code action |
-| `[d` / `]d` | prev / next diagnostic |
-| `<leader>e` | show diagnostic float |
-| `<leader>mp` | format buffer with Biome (also runs automatically on save) |
-| `<leader>db/dc/do/di` | debug: toggle breakpoint / continue / step over / step into |
-| `<leader>w` / `q` | save / quit |
-| `Ctrl-h/j/k/l` | move between splits |
-
-**Telescope picker controls** (once `<leader>ff`/`fg`/`b`/etc. is open):
-type to fuzzy-filter, `Ctrl-n`/`Ctrl-p` (or ↓/↑) to move, `Enter` to open,
-`Ctrl-v`/`Ctrl-x`/`Ctrl-t` to open in a vertical/horizontal split or new tab,
-`Ctrl-c` or `Esc` twice to close without opening anything.
-
-**nvim-tree controls** (once the tree has focus): `Enter`/`o` open or
-expand/collapse, `a` create (end name with `/` for a folder), `d`/`D`
-delete/trash, `r` rename, `R` refresh, `H` toggle dotfiles, `y`/`Y`/`gy`
-copy name/relative path/absolute path, `q` close.
-
-Plugins (lazy.nvim): catppuccin (Mocha), lualine, telescope + plenary,
-nvim-tree + web-devicons, gitsigns, nvim-lspconfig + mason + mason-lspconfig,
-nvim-cmp + LuaSnip (+ cmp sources), conform.nvim (Biome), nvim-treesitter,
-nvim-dap + dap-ui + dap-vscode-js (optional — delete `lua/plugins/dap.lua`
-if you don't want it).
-
 ## What to tweak if something feels off
 
 - **`ts_ls` sluggish on a big monorepo** → in `nvim/lua/plugins/lsp.lua`,
@@ -171,8 +94,9 @@ if you don't want it).
 
 ## Keeping configs versioned across laptops
 
-Since `~/.tmux.conf`, `~/.vimrc`, and `~/.config/nvim` are symlinks into
-this repo, day-to-day edits already land inside `~/dotfiles-cli`:
+Since `~/.tmux.conf`, `~/.vimrc`, `~/.config/nvim`, and `~/.aliases` are
+symlinks into this repo, day-to-day edits already land inside
+`~/dotfiles-cli`:
 
 ```bash
 cd ~/dotfiles-cli

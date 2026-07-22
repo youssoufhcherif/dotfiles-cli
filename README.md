@@ -1,8 +1,9 @@
 # dotfiles-cli
 
-My terminal setup: tmux, vim, and Neovim, kept in sync across every laptop I use.
-Catppuccin (Mocha) everywhere, `Ctrl-Space` as the tmux prefix, `Space` as the
-vim/nvim leader, and Biome wired up to format JS/TS/JSON on save.
+My terminal setup: tmux, vim, Neovim, and shell aliases, kept in sync across
+every laptop I use. Catppuccin (Mocha) everywhere, `Ctrl-Space` as the tmux
+prefix, `Space` as the vim/nvim leader, and Biome wired up to format JS/TS/JSON
+on save.
 
 ## What's in here
 
@@ -13,14 +14,16 @@ dotfiles-cli/
 │   └── tmux.conf    # tmux config (Catppuccin status bar, TPM plugins)
 ├── vim/
 │   └── vimrc        # plain vim/MacVim config (CtrlP, NERDTree, ALE+Biome)
-└── nvim/
-    ├── init.lua      # Neovim config (Telescope, nvim-tree, LSP, Biome)
-    └── lua/
+├── nvim/
+│   ├── init.lua      # Neovim config (Telescope, nvim-tree, LSP, Biome)
+│   └── lua/
+└── shell/
+    └── aliases       # shared zsh/bash aliases and functions
 ```
 
 `vim` and `nvim` are two independent configs — same keybinding philosophy
 (leader = Space, same theme), different plugins under the hood. See
-[HOWTO.md](HOWTO.md) for which keys do what in each.
+[CHEATSHEET.md](CHEATSHEET.md) for which keys do what in each.
 
 ## Install on a new machine
 
@@ -32,10 +35,11 @@ cd ~/dotfiles-cli
 
 The script installs the required packages (tmux, vim, a current Neovim,
 ripgrep, fd, biome), installs the plugin managers (TPM, vim-plug, lazy.nvim),
-and symlinks `~/.tmux.conf`, `~/.vimrc`, and `~/.config/nvim` into this repo.
-It's safe to re-run — anything that isn't already a symlink into this repo
-gets backed up once to `~/.dotfiles-backup-<timestamp>/` before being
-replaced.
+and symlinks `~/.tmux.conf`, `~/.vimrc`, `~/.config/nvim`, and `~/.aliases`
+into this repo (adding a `source ~/.aliases` line to `~/.zshrc`/`~/.bashrc`
+if it isn't already there). It's safe to re-run — anything that isn't
+already a symlink into this repo gets backed up once to
+`~/.dotfiles-backup-<timestamp>/` before being replaced.
 
 Works on macOS (Homebrew) and Ubuntu/WSL (apt). See
 [HOWTO.md](HOWTO.md) for platform-specific gotchas (fonts, clipboard, etc).
@@ -43,24 +47,15 @@ Works on macOS (Homebrew) and Ubuntu/WSL (apt). See
 ## Keeping it in sync
 
 Because the live config files are symlinks into this repo, editing
-`~/.vimrc` or anything under `~/.config/nvim` edits the file *in this repo* —
-`cd ~/dotfiles-cli && git status` will show it. Commit and push from there,
-then `git pull` on your other machines to pick up the change.
+`~/.vimrc`, anything under `~/.config/nvim`, or `~/.aliases` edits the file
+*in this repo* — `cd ~/dotfiles-cli && git status` will show it. Commit and
+push from there, then `git pull` on your other machines to pick up the
+change.
 
-## Keybinding cheat sheet
+## Cheatsheet
 
-| Action | tmux | vim | nvim |
-|---|---|---|---|
-| Prefix / leader | `Ctrl-Space` | `Space` | `Space` |
-| Fuzzy find files | — | `Ctrl-P` | `<leader>ff` |
-| Recent files | — | `<leader>fr` | `<leader>fr` |
-| Buffer/tab switcher | — | `<leader>b` | `<leader>b` |
-| Toggle file tree | — | `<leader>1` | `<leader>1` |
-| Reveal file in tree | — | `<leader>2` | `<leader>2` |
-| Format on save (Biome) | — | automatic (ALE) | automatic (conform.nvim) |
-| Split panes | `prefix + \|` / `prefix + -` | `<leader>v` / `<leader>h` | `<leader>v` / `<leader>h` |
-
-Full details, plugin lists, and per-platform install notes are in
+Every keybinding and shell alias, per tool, lives in
+[CHEATSHEET.md](CHEATSHEET.md). Install steps and plugin lists are in
 [HOWTO.md](HOWTO.md).
 
 ## License
