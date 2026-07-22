@@ -166,11 +166,9 @@ nnoremap <leader>h :split<CR>
 " Type `<leader>v to split the window vertically and `h to split horizontally.
 nnoremap <leader>c :close<CR>
 
-" Navigate to the split view easier by pressing CTRL+j, CTRL_k, CTRL+h, CTRL+l.
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+" Seamless split/pane navigation with CTRL+h/j/k/l is provided by the
+" vim-tmux-navigator plugin (see PLUGINS below). It moves across vim splits
+" AND tmux panes in one keystroke, so no manual <c-w> mappings here.
 
 " Resize split windows using arrows keys by pressing CTRL+UP, CTRL+DOWN, CTRL+LEFT, CTRL+RIGHT.
 nnoremap <c-up> <c-w>+
@@ -234,6 +232,7 @@ endif
             \ Plug 'ryanoasis/vim-devicons'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'dense-analysis/ale'
+    Plug 'christoomey/vim-tmux-navigator'
     call plug#end()
 "call plug#begin('~/.vim/plugged')
 
