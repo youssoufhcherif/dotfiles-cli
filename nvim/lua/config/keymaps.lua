@@ -11,6 +11,10 @@ map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 map("n", "<leader>w", "<cmd>write<cr>", { desc = "Save file" })
 map("n", "<leader>q", "<cmd>quit<cr>", { desc = "Quit window" })
 
+-- Splits, matching vim/vimrc
+map("n", "<leader>v", "<cmd>vsplit<cr>", { desc = "Vertical split" })
+map("n", "<leader>h", "<cmd>split<cr>", { desc = "Horizontal split" })
+
 -- Move selected lines up/down
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })

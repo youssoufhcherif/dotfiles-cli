@@ -126,6 +126,7 @@ Plugins (vim-plug): vim-airline (+themes), CtrlP, catppuccin/vim, NERDTree
 | `<leader>fd` | diagnostics list |
 | `<leader>1` | toggle file tree (nvim-tree) |
 | `<leader>2` | reveal current file in tree |
+| `<leader>v` / `h` | vertical / horizontal split |
 | `gd` / `gr` | go to definition / references |
 | `K` | hover docs |
 | `<leader>rn` | rename symbol |

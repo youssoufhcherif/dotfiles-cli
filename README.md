@@ -58,7 +58,7 @@ then `git pull` on your other machines to pick up the change.
 | Toggle file tree | — | `<leader>1` | `<leader>1` |
 | Reveal file in tree | — | `<leader>2` | `<leader>2` |
 | Format on save (Biome) | — | automatic (ALE) | automatic (conform.nvim) |
-| Split panes | `prefix + \|` / `prefix + -` | `<leader>v` / `<leader>h` | `:vsplit` / `:split` |
+| Split panes | `prefix + \|` / `prefix + -` | `<leader>v` / `<leader>h` | `<leader>v` / `<leader>h` |
 
 Full details, plugin lists, and per-platform install notes are in
 [HOWTO.md](HOWTO.md).
