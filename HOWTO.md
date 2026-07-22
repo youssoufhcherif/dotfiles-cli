@@ -15,15 +15,23 @@ cd ~/dotfiles-cli
 `setup.sh` is idempotent — re-run it any time after pulling changes to pick
 up newly required packages. It:
 
-1. Installs tmux, vim, a current Neovim (0.10+), ripgrep, fd, and biome for
-   your platform (Homebrew on macOS, apt + a manual Neovim release on
-   Ubuntu/WSL).
-2. Symlinks `~/.tmux.conf`, `~/.vimrc`, `~/.config/nvim`, and `~/.aliases` to
-   the files in this repo, and makes sure `~/.zshrc`/`~/.bashrc` source
-   `~/.aliases` (added once if missing). Anything already at those paths
-   that *isn't* one of these symlinks gets moved to
-   `~/.dotfiles-backup-<timestamp>/` first — nothing is silently overwritten.
-3. Installs TPM (tmux), vim-plug (vim), and syncs lazy.nvim (nvim) plugins.
+1. Installs tmux, vim, a current Neovim (0.10+), ripgrep, and fd via apt/the
+   platform installer, plus biome, lazygit, delta, fzf, zoxide, eza, bat,
+   and k9s via **Homebrew** on both macOS and Linux/WSL (these aren't in
+   apt at all, or are old/quirky versions when they are). On Linux, if
+   Homebrew itself isn't installed yet, `setup.sh` installs it first.
+2. Symlinks `~/.tmux.conf`, `~/.vimrc`, `~/.config/nvim`, `~/.aliases`,
+   `~/.config/lazygit`, `~/.config/bat`, and `~/.config/k9s` to the files in
+   this repo, makes sure `~/.zshrc`/`~/.bashrc` source `~/.aliases`, and
+   adds a `[include]` in `~/.gitconfig` pointing at this repo's
+   `git/config` (delta + merge/diff settings — your `user.name`/
+   `user.email` stay in `~/.gitconfig` itself, not versioned here).
+   Anything already at those paths that *isn't* one of these symlinks gets
+   moved to `~/.dotfiles-backup-<timestamp>/` first — nothing is silently
+   overwritten.
+3. Installs TPM (tmux), vim-plug (vim), and syncs lazy.nvim (nvim) plugins,
+   and builds bat's theme cache (`bat cache --build`) so the Catppuccin
+   syntax theme actually renders.
 
 ### Platform notes
 
@@ -87,16 +95,24 @@ re-syncs plugins after editing `tmux/tmux.conf`, `prefix + U` updates them.
 - **Different colorscheme** → swap `catppuccin/nvim` in
   `nvim/lua/plugins/ui.lua` (or `catppuccin/vim` in `vim/vimrc`) for
   anything else — same plugin-spec pattern either way.
-- **fzf missing** (`tmux-fzf` plugin installed but no `prefix + F` menu) →
-  `setup.sh` doesn't install `fzf` itself on Linux since it needs `apt`
-  outside a passwordless sudo context on some machines; run
-  `brew install fzf` (mac) or `sudo apt install fzf` (Ubuntu/WSL) manually.
+- **`ll`/`le`/`lt` (eza) hanging or misbehaving** → in testing, `eza`
+  reliably hung with zero output in automated/non-interactive shells here,
+  regardless of flags or directory — `ls`, `bat`, `delta`, `fzf`, and
+  `zoxide` were all fine in the same environment. Because of that, `ll` is
+  deliberately still plain `ls -la`; eza is only exposed as `le`/`lt` in
+  `shell/aliases`. Try those yourself in a real terminal — if solid, change
+  `ll`'s alias definition there to `eza -la --icons --git`.
+- **No git user.name/email after a fresh `setup.sh` run** → identity is
+  deliberately not versioned in this public repo. Set it once per machine:
+  `git config --global user.name "..."` and `--global user.email "..."`.
 
 ## Keeping configs versioned across laptops
 
-Since `~/.tmux.conf`, `~/.vimrc`, `~/.config/nvim`, and `~/.aliases` are
-symlinks into this repo, day-to-day edits already land inside
-`~/dotfiles-cli`:
+Since `~/.tmux.conf`, `~/.vimrc`, `~/.config/nvim`, `~/.aliases`,
+`~/.config/lazygit`, `~/.config/bat`, and `~/.config/k9s` are all symlinks
+into this repo, day-to-day edits already land inside `~/dotfiles-cli`
+(the exception is `~/.gitconfig` itself, which stays local on purpose —
+only its `[include]` line points here):
 
 ```bash
 cd ~/dotfiles-cli

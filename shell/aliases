@@ -1,3 +1,14 @@
+# --- tool init: fzf, zoxide (must run before any alias/completion that depends on them) ---
+if [ -n "$ZSH_VERSION" ]; then
+  command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
+  command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+elif [ -n "$BASH_VERSION" ]; then
+  command -v fzf >/dev/null 2>&1 && eval "$(fzf --bash)"
+  command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init bash)"
+fi
+# fzf's Ctrl-T (fuzzy file insert) previews with bat when available
+command -v bat >/dev/null 2>&1 && export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias p=pnpm
@@ -23,6 +34,14 @@ alias test='pnpm test'
 # Utilities
 alias cl='clear'
 alias ll='ls -la'
+# eza (modern ls) is installed but NOT wired into ll/ls by default: it hung
+# indefinitely in automated/non-interactive testing here regardless of flags
+# or directory. Try le/lt yourself in a real terminal before trusting them
+# for daily use; if they're solid, promote le to ll.
+command -v eza >/dev/null 2>&1 && alias le='eza -la --icons --git'
+command -v eza >/dev/null 2>&1 && alias lt='eza --tree --icons --git-ignore'
+# lazygit
+alias lg='lazygit'
 
 # Config
 

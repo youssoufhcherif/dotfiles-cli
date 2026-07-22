@@ -100,6 +100,8 @@ sparse here — oh-my-zsh's `git` plugin already provides a large set
 | `mkcd <dir>` | `mkdir -p <dir> && cd <dir>` (function) |
 | `killport <port>` | kill whatever's listening on a port (function) |
 | `cl` / `ll` | `clear` / `ls -la` |
+| `le` / `lt` | `eza -la --icons --git` / `eza --tree --icons --git-ignore` (only if `eza` installed — see caveat below) |
+| `lg` | `lazygit` |
 | `reload` | restart the current shell |
 | `zconf` / `zsource` | open / re-source `~/.zshrc` |
 | `pbcopy` / `pbpaste` | clipboard via `xclip` |
@@ -119,3 +121,21 @@ sparse here — oh-my-zsh's `git` plugin already provides a large set
 | `backup <file>` | copy to `file.bak-<timestamp>` (function) |
 | `hist <term>` | grep shell history (function) |
 | `myip` | show public + local IP (function) |
+
+## Productivity tools
+
+| Tool | Use it via | Does |
+|---|---|---|
+| **fzf** | `Ctrl-R` | fuzzy-search shell history |
+| | `Ctrl-T` | fuzzy-insert a file path at the cursor (bat-previewed) |
+| | `Alt-C` | fuzzy-cd into a subdirectory |
+| **zoxide** | `z <partial-name>` | jump to your most-used matching directory, from anywhere |
+| | `zi` | fzf-picker over all visited directories |
+| **eza** | `le` / `lt` | modern `ls`/tree — see the caveat in [HOWTO.md](HOWTO.md) before relying on it |
+| **bat** | `bat <file>` | `cat` with syntax highlighting (Catppuccin Mocha theme) |
+| **delta** | automatic | any `git diff`/`git log -p`/`git show` renders side-by-side with syntax highlighting — no separate command, just wired in as git's pager |
+| **k9s** | `k9s` | terminal UI for kubectl — browse pods/logs, `:ctx` to switch context, `d` describe, `l` logs, `s` shell into a pod, `Ctrl-d` delete, `/` filter, `:q` quit |
+| **lazygit** | `lg` | terminal UI for git — full keybinding table and workflow in [GIT.md](GIT.md) |
+
+New to the CLI git flow? Start with [GIT.md](GIT.md) — it's written as a
+read-once tutorial, not just a lookup table.
