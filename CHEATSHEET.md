@@ -87,7 +87,9 @@ Plugins (lazy.nvim): catppuccin (Mocha), lualine, telescope + plenary,
 nvim-tree + web-devicons, gitsigns, nvim-lspconfig + mason + mason-lspconfig,
 nvim-cmp + LuaSnip (+ cmp sources), conform.nvim (Biome), nvim-treesitter,
 nvim-dap + dap-ui + dap-vscode-js (optional — delete `lua/plugins/dap.lua`
-if you don't want it).
+if you don't want it), scrollEOF.nvim (lets `scrolloff` keep the cursor
+centered even at the end of the file, instead of pinning the last line to
+the bottom — no equivalent exists for plain vim; see HOWTO.md).
 
 ## Shell aliases (`shell/aliases`, symlinked to `~/.aliases`)
 

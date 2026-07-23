@@ -105,6 +105,14 @@ re-syncs plugins after editing `tmux/tmux.conf`, `prefix + U` updates them.
 - **No git user.name/email after a fresh `setup.sh` run** → identity is
   deliberately not versioned in this public repo. Set it once per machine:
   `git config --global user.name "..."` and `--global user.email "..."`.
+- **Last line still stuck at the bottom in plain vim/MacVim, unlike nvim** →
+  this is a real, documented Vim limitation, not a config gap: `:help
+  scrolloff` explicitly says centering is overridden "at the start or end of
+  the file." Confirmed by testing that neither `winrestview()` nor even
+  manual `Ctrl-E` can push the view past EOF while the cursor sits on the
+  last line in plain Vim — Neovim's internals allow it, which is what
+  `scrollEOF.nvim` relies on. No known workaround for plain vim; use nvim
+  when this specific behavior matters.
 
 ## Keeping configs versioned across laptops
 

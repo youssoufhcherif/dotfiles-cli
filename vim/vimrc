@@ -63,6 +63,12 @@ set nobackup
 " scrolloff=999 keeps the cursor vertically centered ("typewriter scrolling"),
 " so the last line is never pinned to the bottom -- it rises to the middle with
 " empty space below, like WebStorm's virtual space at the file bottom.
+" NOTE: this only applies mid-file. Vim's own docs are explicit that scrolloff
+" is overridden "at the start or end of the file" -- confirmed by testing that
+" neither winrestview() nor even manual Ctrl-E can push the view past EOF while
+" the cursor sits on the last line, unlike Neovim (see nvim/lua/plugins/
+" scrolleof.lua, which works there). No known way to replicate this in plain
+" vim/MacVim; use nvim when this specific behavior matters.
 set scrolloff=999
 
 " Do not wrap lines. Allow long lines to extend as far as the line goes.
