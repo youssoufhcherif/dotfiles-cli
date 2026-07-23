@@ -17,7 +17,7 @@ Leader/prefix: **`Space`** in vim and nvim, **`Ctrl-Space`** in tmux.
 | `prefix + F` | tmux-fzf menu (sessions/windows/panes) |
 | `prefix + I` / `U` | install / update TPM plugins |
 
-Plugins: tmux-sensible, tmux-resurrect + tmux-continuum (auto-save every 15
+Plugins: tmux-sensible, tmux-resurrect + tmux-continuum (auto-save every 5
 min, auto-restore on start), tmux-yank (system clipboard, win32yank-aware on
 WSL), vim-tmux-navigator (`Ctrl-h/j/k/l` moves between vim splits *and* tmux
 panes seamlessly), tmux-fzf, catppuccin/tmux (Mocha).
@@ -109,7 +109,8 @@ sparse here — oh-my-zsh's `git` plugin already provides a large set
 | `k` / `kgp` / `kgs` / `kaf` / `kl` | `kubectl` / get pods / get svc / apply -f / logs -f |
 | `d` / `dc` / `dps` | `docker` / `docker compose` / `docker ps` |
 | `dcu` / `dcd` / `dcl` | compose up -d / down / logs -f |
-| `ta <name>` / `tls` / `tn <name>` / `tk <name>` | tmux attach / list / new / kill session |
+| `ta <name>` | attach to `<name>`, or create it if it doesn't exist yet |
+| `tls` / `tn <name>` / `tk <name>` | list / new / kill session |
 | `dotf` | `cd ~/dotfiles-cli` |
 | `please` | re-run the last command with `sudo` |
 | `gundo` | undo last commit, keep changes staged (function) |

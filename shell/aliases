@@ -54,7 +54,7 @@ alias zsource='source ~/.zshrc'
 alias reload='exec "$SHELL"'
 
 # tmux
-alias ta='tmux attach -t'
+alias ta='tmux new-session -A -s'
 alias tls='tmux ls'
 alias tn='tmux new -s'
 alias tk='tmux kill-session -t'
