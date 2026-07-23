@@ -6,6 +6,7 @@ return {
       require("nvim-tree").setup({
         filters = { dotfiles = false },
         git = { enable = true },
+        view = { side = "right" },
       })
       local api = require("nvim-tree.api")
       vim.keymap.set("n", "<leader>1", api.tree.toggle, { desc = "Toggle file tree" })
