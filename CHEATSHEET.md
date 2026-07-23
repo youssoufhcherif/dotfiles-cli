@@ -16,6 +16,15 @@ Leader/prefix: **`Space`** in vim and nvim, **`Ctrl-Space`** in tmux.
 | `prefix + r` | reload `tmux.conf` |
 | `prefix + F` | tmux-fzf menu (sessions/windows/panes) |
 | `prefix + I` / `U` | install / update TPM plugins |
+| `Ctrl-h/j/k/l` (no prefix) | move between panes/vim-splits seamlessly (vim-tmux-navigator) |
+| `prefix + Ctrl-l` | clear the screen — plain `Ctrl-l` outside vim is claimed by the navigator above (see note) |
+
+**Note on `Ctrl-l`**: vim-tmux-navigator binds raw `Ctrl-h/j/k/l` (no prefix)
+so they move seamlessly between vim splits *and* tmux panes. Outside vim,
+that means plain `Ctrl-l` no longer reaches the shell's clear-screen
+binding — it moves to the pane on the right instead. Use `prefix + Ctrl-l`
+to clear (the plugin binds this specifically for that), or the `cl` alias /
+plain `clear`, which always work regardless.
 
 Plugins: tmux-sensible, tmux-resurrect + tmux-continuum (auto-save every 5
 min, auto-restore on start), tmux-yank (system clipboard, win32yank-aware on
