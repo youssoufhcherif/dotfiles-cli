@@ -241,6 +241,7 @@ endif
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'dense-analysis/ale'
     Plug 'christoomey/vim-tmux-navigator'
+    Plug 'jiangmiao/auto-pairs'
     call plug#end()
 "call plug#begin('~/.vim/plugged')
 

@@ -47,7 +47,9 @@ panes seamlessly), tmux-fzf, catppuccin/tmux (Mocha).
 | save a file | Biome formats it automatically (ALE fixer) |
 
 Plugins (vim-plug): vim-airline (+themes), CtrlP, catppuccin/vim, NERDTree
-(+ nerdtree-git-plugin, vim-devicons), ALE (Biome fixer, `g:ale_fix_on_save`).
+(+ nerdtree-git-plugin, vim-devicons), ALE (Biome fixer, `g:ale_fix_on_save`),
+vim-tmux-navigator, auto-pairs (type `{`, get `{}`; `<CR>` between them
+expands to an indented 3-line block, like WebStorm).
 
 ## Neovim (`nvim/`)
 
@@ -89,7 +91,10 @@ nvim-cmp + LuaSnip (+ cmp sources), conform.nvim (Biome), nvim-treesitter,
 nvim-dap + dap-ui + dap-vscode-js (optional — delete `lua/plugins/dap.lua`
 if you don't want it), scrollEOF.nvim (lets `scrolloff` keep the cursor
 centered even at the end of the file, instead of pinning the last line to
-the bottom — no equivalent exists for plain vim; see HOWTO.md).
+the bottom — no equivalent exists for plain vim; see HOWTO.md), nvim-autopairs
+(type `{`, get `{}`; `<CR>` between them expands to an indented 3-line
+block, like WebStorm — also auto-inserts `(` after accepting a function/
+method completion).
 
 ## Shell aliases (`shell/aliases`, symlinked to `~/.aliases`)
 
