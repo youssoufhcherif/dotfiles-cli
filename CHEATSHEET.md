@@ -18,6 +18,13 @@ Leader/prefix: **`Space`** in vim and nvim, **`Ctrl-Space`** in tmux.
 | `prefix + I` / `U` | install / update TPM plugins |
 | `Ctrl-h/j/k/l` (no prefix) | move between panes/vim-splits seamlessly (vim-tmux-navigator) |
 | `prefix + Ctrl-l` | clear the screen — plain `Ctrl-l` outside vim is claimed by the navigator above (see note) |
+| `prefix + [` | enter copy-mode (keyboard scrolling, no mouse needed) |
+
+**Copy-mode** (`prefix + [` to enter, `q`/`Esc` to exit) uses vi-style keys
+(`mode-keys vi`): `h/j/k/l` move, `Ctrl-u`/`Ctrl-d` half-page up/down,
+`Ctrl-b`/`Ctrl-f` full page, `g`/`G` top/bottom of scrollback, `/`/`?`
+search, `v` then move then `y` to select and copy (tmux-yank sends it to
+the system clipboard).
 
 **Note on `Ctrl-l`**: vim-tmux-navigator binds raw `Ctrl-h/j/k/l` (no prefix)
 so they move seamlessly between vim splits *and* tmux panes. Outside vim,
