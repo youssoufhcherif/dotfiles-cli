@@ -87,9 +87,10 @@ re-syncs plugins after editing `tmux/tmux.conf`, `prefix + U` updates them.
 
 ## What to tweak if something feels off
 
-- **`ts_ls` sluggish on a big monorepo** → in `nvim/lua/plugins/lsp.lua`,
-  swap `ts_ls` for `vtsls` in `ensure_installed` and in the
-  `lspconfig.<name>.setup(...)` call.
+- **TypeScript LSP not attaching** → `nvim/lua/plugins/lsp.lua` runs
+  `tsc --lsp --stdio` from your global `typescript` package (v7+, the
+  Go-native rewrite) via nvim-lspconfig's `tsgo` preset. Make sure a global
+  or project-local `typescript` is installed and resolvable as `tsc`.
 - **Don't want the nvim debugger scaffolding** → delete
   `nvim/lua/plugins/dap.lua`, nothing else references it.
 - **Different colorscheme** → swap `catppuccin/nvim` in
