@@ -1,0 +1,3 @@
+# ~/.zshenv — symlinked from ~/dotfiles-cli/zsh/zshenv by setup.sh
+# Read by every zsh (including non-interactive), so keep it tiny.
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

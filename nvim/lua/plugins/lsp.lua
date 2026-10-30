@@ -62,6 +62,11 @@ return {
       })
       vim.lsp.enable("tsgo")
 
+      vim.lsp.config("rust_analyzer", {
+        settings = { ["rust_analyzer"] = { check = { command = "clippy" } } }
+      })
+      vim.lsp.enable('rust_analyzer')
+
       -- Biome as a second LSP client running alongside tsgo: gives you
       -- Biome's own diagnostics in the editor (not just at commit time via
       -- Lefthook). Formatting-on-save is handled separately by conform.nvim.

@@ -23,7 +23,7 @@ opt.signcolumn = "yes"
 -- so the last line is never pinned to the bottom -- it rises to the middle with
 -- empty space below, like WebStorm's virtual space at the file bottom.
 opt.scrolloff = 999
-opt.wrap = false
+opt.wrap = true
 opt.cursorline = true
 opt.splitright = true
 opt.splitbelow = true

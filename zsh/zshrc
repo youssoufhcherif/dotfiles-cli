@@ -1,0 +1,59 @@
+# ~/.zshrc — symlinked from ~/dotfiles-cli/zsh/zshrc by setup.sh
+#
+# Layering: oh-my-zsh for completions + the git plugin, Starship for the
+# prompt (so ZSH_THEME stays empty), brew-installed autosuggestions and
+# syntax-highlighting sourced directly (no oh-my-zsh custom plugin clones to
+# keep in sync). Secrets live in ~/.env (never in this repo); machine-local
+# tweaks go in ~/.zshrc.local.
+
+# --- oh-my-zsh -------------------------------------------------------------
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME=""                      # prompt is Starship, see below
+plugins=(git)
+DISABLE_AUTO_UPDATE="true"        # update deliberately with `omz update`
+[ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
+
+# --- history ---------------------------------------------------------------
+HISTSIZE=50000
+SAVEHIST=50000
+HISTFILE="$HOME/.zsh_history"
+setopt HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY INC_APPEND_HISTORY EXTENDED_HISTORY
+
+# --- environment -----------------------------------------------------------
+export EDITOR="nvim"
+export VISUAL="$EDITOR"
+export LANG="${LANG:-en_US.UTF-8}"
+export PATH="$HOME/.local/bin:$PATH"
+
+# --- tool versions: mise (preferred) with nvm as fallback -----------------
+# mise manages node/pnpm/python/… per project (.mise.toml / .tool-versions).
+# nvm is only used on machines where mise isn't installed (legacy laptops).
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+elif [ -s "$HOME/.nvm/nvm.sh" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  . "$NVM_DIR/nvm.sh"
+fi
+
+# --- secrets and aliases ---------------------------------------------------
+# ~/.env holds tokens (GITHUB_TOKEN, NPM_TOKEN, …). Template: env.example in
+# the dotfiles repo. It is intentionally NOT versioned.
+[ -f "$HOME/.env" ] && source "$HOME/.env"
+[ -f "$HOME/.aliases" ] && source "$HOME/.aliases"   # also inits fzf + zoxide
+
+# --- zsh plugins from Homebrew --------------------------------------------
+_brew_prefix="${HOMEBREW_PREFIX:-$(brew --prefix 2>/dev/null)}"
+[ -f "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
+  source "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+# syntax-highlighting must be sourced last
+[ -f "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
+  source "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+unset _brew_prefix
+
+# --- prompt ----------------------------------------------------------------
+command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
+
+# --- machine-local overrides (not versioned) ------------------------------
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

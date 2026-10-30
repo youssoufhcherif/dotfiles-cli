@@ -1,15 +1,31 @@
 # dotfiles-cli
 
-My terminal setup: tmux, vim, Neovim, shell aliases, and a git/Kubernetes
-toolchain, kept in sync across every laptop I use. Catppuccin (Mocha)
-everywhere, `Ctrl-Space` as the tmux prefix, `Space` as the vim/nvim leader,
-and Biome wired up to format JS/TS/JSON on save.
+My terminal setup: zsh + Starship, Ghostty, tmux, vim, Neovim, shell aliases,
+mise for tool versions, and a git/Kubernetes toolchain, kept in sync across
+every machine I use. Catppuccin (Mocha) everywhere, `Ctrl-Space` as the tmux
+prefix, `Space` as the vim/nvim leader, and Biome wired up to format JS/TS/JSON
+on save. One `./setup.sh` on a fresh Mac installs everything from the Brewfile
+and links every config.
 
 ## What's in here
 
 ```
 dotfiles-cli/
-├── setup.sh        # installs packages, plugin managers, and symlinks everything
+├── setup.sh        # installs packages (Brewfile on mac), plugin managers, and symlinks everything
+├── Brewfile         # every brew formula/cask a fresh Mac needs (brew bundle)
+├── env.example      # template for ~/.env (tokens) — ~/.env itself is never committed
+├── zsh/
+│   ├── zshrc         # oh-my-zsh (completions) + autosuggestions/syntax-highlighting + Starship + mise
+│   ├── zprofile      # Homebrew on PATH
+│   └── zshenv        # cargo
+├── starship/
+│   └── starship.toml # prompt: dir, git, node/python/rust, kube, duration (Catppuccin)
+├── ghostty/
+│   └── config        # terminal: Catppuccin Mocha, JetBrainsMono Nerd Font, splits/tabs keys, quick terminal
+├── mise/
+│   └── config.toml   # global tool versions (node lts, pnpm); per-project .mise.toml overrides
+├── claude/
+│   └── settings.json # Claude Code settings — opt-in only: DOTFILES_CLAUDE=1 ./setup.sh
 ├── tmux/
 │   └── tmux.conf    # tmux config (Catppuccin status bar, TPM plugins)
 ├── vim/

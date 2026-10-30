@@ -1,0 +1,6 @@
+# ~/.zprofile — symlinked from ~/dotfiles-cli/zsh/zprofile by setup.sh
+# Login-shell setup: put Homebrew on PATH (Apple Silicon, Intel, or Linuxbrew).
+for _b in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+  if [ -x "$_b" ]; then eval "$("$_b" shellenv zsh)"; break; fi
+done
+unset _b

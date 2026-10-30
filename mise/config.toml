@@ -1,0 +1,10 @@
+# Global mise config — symlinked to ~/.config/mise/config.toml by setup.sh.
+# Per-project versions go in that project's .mise.toml or .tool-versions and
+# override these. `mise use -g node@22` changes the global default.
+[tools]
+node = "lts"
+pnpm = "latest"
+
+[settings]
+experimental = true
+legacy_version_file = true   # honour .nvmrc / .node-version from older projects

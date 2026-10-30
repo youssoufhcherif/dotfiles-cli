@@ -39,14 +39,21 @@ link() {
 # Tools installed via Homebrew on both platforms (mac: real Homebrew, Linux:
 # Linuxbrew) since several of these (lazygit, k9s, eza, zoxide, delta)
 # aren't in apt at all, or are ancient/quirky versions when they are.
-BREW_TOOLS="biome lazygit git-delta fzf zoxide eza bat k9s"
+BREW_TOOLS="biome lazygit git-delta fzf zoxide eza bat k9s starship mise zsh-autosuggestions zsh-syntax-highlighting age"
 
 install_packages() {
   echo "==> Installing packages (tmux, vim, git, ripgrep, fd, and: $BREW_TOOLS)"
   case "$OS" in
     mac)
       command -v brew >/dev/null || { echo "Homebrew not found, install it first: https://brew.sh"; exit 1; }
-      brew install tmux vim neovim git ripgrep fd $BREW_TOOLS
+      # The Brewfile is the single list for macOS: CLI tools, zsh plugins,
+      # starship, mise, Ghostty, the Nerd Font and the GUI apps.
+      echo "==> brew bundle (Brewfile)"
+      brew bundle --file "$REPO_DIR/Brewfile" --no-upgrade
+      [ -d "$HOME/.oh-my-zsh" ] || {
+        echo "==> Installing oh-my-zsh (completions + git plugin; the prompt is Starship)"
+        RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      }
       ;;
     wsl|linux)
       sudo apt update
@@ -101,14 +108,32 @@ link_configs() {
   link "$REPO_DIR/lazygit" "$HOME/.config/lazygit"
   link "$REPO_DIR/bat" "$HOME/.config/bat"
   link "$REPO_DIR/k9s" "$HOME/.config/k9s"
+  link "$REPO_DIR/zsh/zshrc" "$HOME/.zshrc"
+  link "$REPO_DIR/zsh/zprofile" "$HOME/.zprofile"
+  link "$REPO_DIR/zsh/zshenv" "$HOME/.zshenv"
+  link "$REPO_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
+  link "$REPO_DIR/mise/config.toml" "$HOME/.config/mise/config.toml"
+  link "$REPO_DIR/ghostty/config" "$HOME/.config/ghostty/config"
 
-  for rc in "$HOME/.zshrc" "$HOME/.bashrc"; do
-    [ -f "$rc" ] || continue
-    grep -q 'source ~/.aliases\|\. ~/.aliases' "$rc" || {
-      echo "==> Adding 'source ~/.aliases' to $rc"
-      printf '\nsource ~/.aliases\n' >> "$rc"
-    }
-  done
+  # Claude Code settings are opt-in (see claude/README.md):
+  #   DOTFILES_CLAUDE=1 ./setup.sh
+  if [ "${DOTFILES_CLAUDE:-0}" = "1" ]; then
+    link "$REPO_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+  else
+    echo "==> Skipping Claude Code settings (run with DOTFILES_CLAUDE=1 to link them)"
+  fi
+
+  # ~/.zshrc is versioned above; bash users still get the aliases this way.
+  [ -f "$HOME/.bashrc" ] && ! grep -q 'source ~/.aliases\|\. ~/.aliases' "$HOME/.bashrc" && {
+    echo "==> Adding 'source ~/.aliases' to ~/.bashrc"
+    printf '\nsource ~/.aliases\n' >> "$HOME/.bashrc"
+  }
+
+  # Secrets template: ~/.env is sourced by zshrc but never versioned.
+  [ -f "$HOME/.env" ] || {
+    cp "$REPO_DIR/env.example" "$HOME/.env" && chmod 600 "$HOME/.env"
+    echo "==> Created ~/.env from env.example — fill in your tokens (chmod 600 already set)"
+  }
 
   # ~/.gitconfig keeps user.name/user.email local (not versioned in this
   # public repo); only the [include] pointing at the repo's delta/diff
@@ -144,12 +169,19 @@ install_packages
 link_configs
 install_plugin_managers
 
+if command -v mise >/dev/null 2>&1; then
+  echo "==> mise: installing global tool versions (node lts, pnpm)"
+  mise install -y || true
+fi
+
 echo
 echo "==> Done. Open a new shell (for PATH changes and aliases), then:"
 echo "    tmux              # prefix is Ctrl-Space"
 echo "    vim / nvim        # leader is Space"
 echo "    lg                # lazygit"
 echo "    k9s               # kubectl TUI"
+echo "    mise ls           # node/pnpm versions (per-project: .mise.toml)"
+echo "    ~/.env            # fill in tokens (template: env.example)"
 echo
 echo "See README.md, HOWTO.md, and CHEATSHEET.md in this repo for keybindings,"
 echo "platform notes, and the full git workflow (GIT.md)."

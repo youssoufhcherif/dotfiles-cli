@@ -33,3 +33,21 @@ map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic" })
 -- Telescope, LSP, and formatting keymaps live in their own plugin specs
 -- (lua/plugins/telescope.lua, lua/plugins/lsp.lua, lua/plugins/formatting.lua)
 -- so they're defined right next to the plugin that provides them.
+
+-- Leave insert mode with jj (timeoutlen=400 keeps the pause short)
+map("i", "jj", "<Esc>", { desc = "Exit insert mode" })
+
+-- Terminal: open in a split and drop straight into insert mode
+map("n", "<leader>t", "<cmd>split | terminal<cr>i", { desc = "Terminal in horizontal split" })
+map("n", "<leader>vt", "<cmd>vsplit | terminal<cr>i", { desc = "Terminal in vertical split" })
+
+-- <Esc> in terminal mode goes back to normal mode (<C-\><C-n> is the built-in way).
+-- Note: this means a literal Esc is no longer sent to the shell/TUI program;
+-- use <C-\><C-n> if you ever need the real <C-\><C-n> behaviour from a mapping.
+map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+-- Window navigation from inside a terminal split too
+map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Go to left window" })
+map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "Go to lower window" })
+map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "Go to upper window" })
+map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Go to right window" })
