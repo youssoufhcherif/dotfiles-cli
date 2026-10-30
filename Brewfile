@@ -46,16 +46,10 @@ brew "k9s"
 # a Brewfile; install it by hand once:  brew tap fluxcd/tap && brew install fluxcd/tap/flux
 brew "opentofu"
 brew "awscli"
-brew "sops"
-brew "age"                      # encrypts the SOPS keys + the homelab escrow
+brew "sops"                     # needed to edit secrets.yaml in cluster-workloads (homelab GitOps)
+brew "age"                      # key format used by sops + decrypts the homelab key escrow on the Pi
 
 # --- apps (casks) ----------------------------------------------------------
 cask "ghostty"
 cask "font-jetbrains-mono-nerd-font"
 cask "docker-desktop"
-cask "firefox"
-cask "notion"
-
-# --- App Store (WireGuard has no cask; uncomment to let brew bundle install it) ---
-# brew "mas"
-# mas "WireGuard", id: 1451685025
