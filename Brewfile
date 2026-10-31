@@ -31,7 +31,6 @@ brew "poppler"                  # pdftotext & co
 # --- git -------------------------------------------------------------------
 brew "git"
 brew "git-delta"                # diffs (git/config)
-brew "git-lfs"                  # large files (muyassar datasets live in Forgejo LFS)
 brew "git-filter-repo"
 brew "gh"                       # GitHub CLI, also the credential helper
 brew "lazygit"
