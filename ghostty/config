@@ -3,7 +3,7 @@
 # Theme matches the rest of the toolchain (tmux, vim/nvim, bat, delta, k9s, starship).
 
 # --- look ------------------------------------------------------------------
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 font-family = "JetBrainsMono Nerd Font"
 font-size = 15
 font-thicken = true
